@@ -1,9 +1,3 @@
-## Inhaltsverzeichnis 
-1. [What is B.U.M.S.?](#What is B.U.M.S.?)
-2. [Use-Cases](#Use-Cases)
-3. [Installation guide](#Installation guide)
-
-
 # What is B.U.M.S.?
 
 **B.U.M.S.** stands for 
