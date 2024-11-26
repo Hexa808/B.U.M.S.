@@ -1,12 +1,25 @@
 import socket
 import threading
 import json
+import time
 
 MAX_CONNECTIONS = 254
 messagepath = "message/message.json"
 
-with open(messagepath, 'r') as file:
-    messagejson = json.load(file)
+# Shared variable to hold the latest JSON data
+messagejson = {}
+
+# Function to periodically update the JSON data
+def update_json():
+    global messagejson
+    while True:
+        try:
+            with open(messagepath, 'r') as file:
+                messagejson = json.load(file)
+            print("JSON file updated.")
+        except Exception as e:
+            print(f"Error reading JSON file: {e}")
+        time.sleep(120)  # Wait for 120 seconds before updating again
 
 def handle_client(conn, addr):
     print(f"New connection from: {addr}")
@@ -18,9 +31,8 @@ def handle_client(conn, addr):
                 break
             print(f"Received from {addr}: {data}")
             if data == "Hello, server! I'm about to disconnect.":
-                conn.send(f"{messagejson}".encode())
-#            response = f"Server received: {data}"
-#            conn.send(response.encode())
+                # Send the latest JSON data to the client
+                conn.send(json.dumps(messagejson).encode())
         except Exception as e:
             print(f"Error handling client {addr}: {e}")
             break
@@ -48,4 +60,8 @@ def start_server():
             print(f"Error accepting connection: {e}")
 
 if __name__ == '__main__':
+    # Start a separate thread to update the JSON file periodically
+    json_update_thread = threading.Thread(target=update_json, daemon=True)
+    json_update_thread.start()
+
     start_server()
