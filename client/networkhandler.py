@@ -1,6 +1,10 @@
 import socket
+import json
 
 
+def write_json_to_file(json_content, file_path):
+    with open(file_path, 'w') as json_file:
+        json.dump(json.loads(json_content), json_file)
 
 def connect_and_close():
     host = '10.0.0.62'  # Server's hostname or IP address
@@ -19,8 +23,10 @@ def connect_and_close():
             print(f"Sent: {message}")
 
             # Receive the response (optional)
-            data = s.recv(1024).decode()
-            print(f"Received: {data}")
+            data = s.recv(1024)
+            print(f"Received: {data.decode()}")
+            #print(data.decode().replace("'",'"'))
+            write_json_to_file(data.decode().replace("'",'"'),'message/message.json')
 
 
 
