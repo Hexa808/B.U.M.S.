@@ -1,56 +1,20 @@
-# B.U.M.S.
+## Inhaltsverzeichnis 
+1. [What is B.U.M.S.?](#What is B.U.M.S.?)
+2. [Use-Cases](#Use-Cases)
+3. [Installation guide](#Installation guide)
 
 
-Client
-- fragt alle 15 Sekunden ob Update verfügbar ist
-	- wenn  Update verfügbar HASHVALUE in Variable speichern
-	- wenn nicht nichts tun und alle 15 Sekunden weiter wiederholen
+# What is B.U.M.S.?
 
-Server
-- message publizieren auf Anfrage
-- message kommt aus /server/message/message.json
+**B.U.M.S.** stands for 
+**B**roadcast **U**ser **M**essaging **S**ervice and is an under development one-to-many messaging tool.
+It consist of a server that stores a message.json file and several clients which periodically pull the message from the server
 
-
-Konstrukt einer Message
-
-1. Titel
-2. Inhalt
-3. Author (IP Adresse)
-
-Ablauf:
-
-1. Client fragt Update an mit dem Hash der aus dem Inhalt der JSON datei generiert wird
-2. Server vergleicht Hash der Anfrage mit Hash der aktuellen JSON datei (gespeichert in Variable)
-	1. wenn Hashes sich unterscheiden wird JSON Datei übermittelt
-	2. wenn Hashes übereinstimmen gibt er "No updates available" aus
-3. Client gibt JSON via simplem GUI aus
-
-
-Dateistruktur auf Server
-
-/server/working/
- - beinhaltet Code zur Funktion des Servers
-	 - networkHandler
-		 - kommuniziert mit Client, gleicht angefragten hash mit hash aus hashcalc ab
-	 - hashcalc
-		 - md5 Hash generierung aus message.json
-	 - fileHandler
-		 - ==To be refined==
-
-/server/message/
-- beinhaltet message.json Datei
 ---
-Dateistruktuf auf Client
-/client/working/
-- beinhaltet Code zur funktion des Clients
-	- networkHandler
-		- kommuniziert mit Server, updatet alle 15 Sekunden mit aus hashcalc generiertem Hash
-	- hashcalc
-		- md5 Hash generierung aus /client/message/message.json
-	- fileHandler
-		- schreibt von networkHandler erhaltene Datei in /client/message/message.json
-	- guiHandler
-		- PopUp message wenn networkHandler eine neue Nachricht erhält
+# Use-Cases
 
-- /client/message/
-	- beinhaltet message.json
+An IT-Admin might want to use such a tool to publish messages quickly to users who do not have e-mail access and would be left in the dark if a outage of some vital productive service occurs.
+
+# Installation guide
+
+**to be announced**
